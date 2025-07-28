@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Call App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .logo {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e1e1;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e1e1e1;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: left;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            color: #666;
+        }
+
+        .feature-icon {
+            margin-right: 10px;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📹</div>
+        <h1>Video Call App</h1>
+        <p class="subtitle">Connect with friends and colleagues through high-quality video calls</p>
+        
+        <form id="joinForm">
+            <div class="form-group">
+                <label for="username">Your Name:</label>
+                <input type="text" id="username" placeholder="Enter your name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="roomId">Room ID:</label>
+                <input type="text" id="roomId" placeholder="Enter room ID or leave empty to create new">
+            </div>
+            
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Join Room</button>
+                <button type="button" class="btn btn-secondary" onclick="createNewRoom()">Create New Room</button>
+            </div>
+        </form>
+
+        <div class="features">
+            <div class="feature-list">
+                <div class="feature">
+                    <span class="feature-icon">🎥</span>
+                    <span>HD Video Quality</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🎤</span>
+                    <span>Crystal Clear Audio</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🔒</span>
+                    <span>Secure Connection</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📱</span>
+                    <span>Cross Platform</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateRoomId() {
+            return Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        function createNewRoom() {
+            const roomId = generateRoomId();
+            document.getElementById('roomId').value = roomId;
+        }
+
+        document.getElementById('joinForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const roomId = document.getElementById('roomId').value.trim() || generateRoomId();
+            
+            if (!username) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            // Store username in localStorage for the room
+            localStorage.setItem('username', username);
+            
+            // Redirect to room
+            window.location.href = `/room/${roomId}`;
+        });
+
+        // Auto-generate room ID if empty
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomIdInput = document.getElementById('roomId');
+            roomIdInput.addEventListener('focus', function() {
+                if (!this.value) {
+                    this.value = generateRoomId();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
