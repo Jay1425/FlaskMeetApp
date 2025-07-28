@@ -172,6 +172,11 @@ If you encounter any issues or have questions:
 3. Verify camera/microphone permissions
 4. Test with different browsers
 
+## Author
+
+**Created by Jay Raychura**
+**Designed by Pujan Chudasama**
+
 ---
 
 **Made with ❤️ using Flask, Socket.IO, and WebRTC**
