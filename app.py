@@ -1,9 +1,10 @@
+import os
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 import uuid
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or os.urandom(32)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Store active rooms and users
